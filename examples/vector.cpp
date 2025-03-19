@@ -1,6 +1,8 @@
 #include <cstdlib>
 #include <cstdio>
-#include "vector.hpp"
+#include <prjx/math/vector.hpp>
+
+using namespace prjx::math;
 
 int main(int argc, char** argv)
 {

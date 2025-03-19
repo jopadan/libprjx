@@ -49,6 +49,9 @@ target_link_libraries( prjx INTERFACE m OpenGL::OpenGL OpenGL::GLU glfw GLC )
 add_executable( checksum examples/checksum.cpp )
 target_link_libraries( checksum PUBLIC prjx )
 
+add_executable( vector examples/vector.cpp )
+target_link_libraries( vector PUBLIC prjx )
+
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION
         ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT headers
 )
