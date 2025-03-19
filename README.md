@@ -7,7 +7,7 @@ Forsaken ProjectX C++ library
 - support checksum algorithm
 - support aligned linalg simd types
 
-## G
+## Usage ##
 ```cpp
 
 using namespace prjx::math;
