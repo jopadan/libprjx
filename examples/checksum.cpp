@@ -13,7 +13,7 @@ void clean()
 
 int main(int argc, char** argv)
 {
-	if(std::filesystem::exists(argv[1]))
+	while(argc > 1 && std::filesystem::exists(argv[1]))
 	{
 		/* print checksum of file */
 		checksum::print(checksum::verify(argv[1]));
@@ -37,5 +37,6 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+	printf("Usage: %s FILE\n", argv[0]);
 	exit(EXIT_FAILURE);
 }
