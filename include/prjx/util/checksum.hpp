@@ -3,7 +3,6 @@
 #include <filesystem>
 
 #include <prjx/math/scalar.hpp>
-#include <prjx/util/magic.h>
 
 namespace prjx::checksum
 {
