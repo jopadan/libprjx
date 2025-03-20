@@ -10,10 +10,11 @@ int main(int argc, char** argv)
 		printf("Usage: %s FILE\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
+	i64 sum[2] = { -1, -1 };
 	for(int i = 1; i < argc && std::filesystem::exists(argv[i]); i++)
 	{
 		/* print checksum of file */
-		checksum::print(checksum::verify(argv[i]));
+		sum[0] = checksum::verify(argv[i]);
 
 		u64 len  = std::filesystem::file_size(argv[i]);
 		u64 read = 0;
@@ -27,10 +28,11 @@ int main(int argc, char** argv)
 
 			/* print checksum of data in buf of len bytes */
 			if(len == read)
-			{
-				checksum::print(checksum::verify(buf, len));
-			}
+				sum[1] = checksum::verify(buf, len);
 			free(buf);
+			if(sum[0] != sum[1])
+				fprintf(stderr, "[ERR] file and buffer checksum don't match!\n");
+			checksum::print(sum[0]);
 		}
 	}
 	exit(EXIT_SUCCESS);
