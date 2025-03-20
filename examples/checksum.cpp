@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
 	if(argc <= 1)
 	{
-		printf("Usage: %s FILE\n", argv[0]);
+		printf("Usage: %s [FILE]...\nCalculate Forsaken ProjectX style checksums for FILEs (the current directory by default).\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	i64 sum[2] = { -1, -1 };
