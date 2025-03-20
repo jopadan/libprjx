@@ -19,11 +19,7 @@ namespace prjx::checksum
 		/* extract remaining tail */
 		else if(cnt > 0)
 		{
-			if(cnt == 2)
-				ret = buf[1] << 8;
-			ret |= buf[0];
-			buf+=cnt;
-			cnt=0;
+			ret = cnt == 2 ? buf[1] << 8 : 0; ret |= buf[0]; buf+=cnt; cnt=0;
 		}
 		return ret;
 	}
