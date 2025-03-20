@@ -10,7 +10,7 @@ namespace prjx::checksum
 
 	inline constexpr u64 read_bytes(u8*& buf, u64& cnt)
 	{
-		u64 ret = 0;
+		u64 ret = -1;
 		/* extract 3 bytes */
 		if(cnt > 2)
 		{
@@ -51,10 +51,10 @@ namespace prjx::checksum
 
 	constexpr i64 verify( std::filesystem::path fname )
 	{
-		FILE *f        = NULL;
-		i64 data       =    0;
-		u64 len        =    0;
-		u8 buf[ 4096 ] = {  };
+		FILE *f      = NULL;
+		i64 data     =    0;
+		u64 len      =    0;
+		u8 buf[4096] = {  };
 
 			if(!fname.empty() &&
 		   std::filesystem::exists(fname) &&
