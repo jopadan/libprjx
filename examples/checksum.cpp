@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 			free(buf);
 			if(sum[0] != sum[1])
 				fprintf(stderr, "[ERR] file and buffer checksum don't match!\n");
-			checksum::print(sum[0]);
+			checksum::print(sum[0], argv[i]);
 		}
 	}
 	exit(EXIT_SUCCESS);

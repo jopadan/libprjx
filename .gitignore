@@ -12,5 +12,7 @@ _deps
 CMakeUserPresets.json
 checksum*
 checksum.*
+prjxsum*
+prjxsum.*
 vector*
 vector.*

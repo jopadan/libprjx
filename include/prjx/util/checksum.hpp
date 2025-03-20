@@ -72,9 +72,9 @@ namespace prjx::checksum
 		return -1;
 	}
 
-	void print(i64 sum, FILE* stream = stdout)
+	void print(i64 sum, std::filesystem::path filename, bool binary = true, FILE* stream = stdout)
 	{
-		fprintf(stream, "0x%016lX\n", sum);
+		fprintf(stream, "%016lx %c%s\n", sum, binary ? '*' : ' ', filename.c_str());
 	}
 };
 
