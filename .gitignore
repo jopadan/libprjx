@@ -11,8 +11,5 @@ CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
 checksum*
-checksum.*
 prjxsum*
-prjxsum.*
 vector*
-vector.*

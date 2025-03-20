@@ -46,7 +46,7 @@ target_include_directories( prjx INTERFACE
 )
 target_link_libraries( prjx INTERFACE m OpenGL::OpenGL OpenGL::GLU glfw GLC )
 
-add_executable( prjxsum examples/checksum.cpp )
+add_executable( prjxsum tools/prjxsum.cpp )
 target_link_libraries( prjxsum PUBLIC prjx )
 
 add_executable( vector examples/vector.cpp )
