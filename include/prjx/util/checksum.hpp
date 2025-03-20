@@ -8,19 +8,36 @@ namespace prjx::checksum
 {
 	using namespace prjx::math;
 
-	i64 compute_block( u8 buf[4096], u64 size )
+	inline constexpr u64 read_bytes(u8*& buf, u64& cnt)
 	{
-		i64   data   = 0;
-		u64 current  = 0;
-		u32    shift = 0;
+		u64 ret = 0;
+		/* extract 3 bytes */
+		if(cnt > 2)
+		{
+			ret = buf[2] << 16 | buf[1] << 8 | buf[0] << 0; buf+=3; cnt-=3;
+		}
+		/* extract remaining tail */
+		else if(cnt > 0)
+		{
+			if(cnt == 2)
+				ret = buf[1] << 8;
+			ret |= buf[0];
+			buf+=cnt;
+			cnt=0;
+		}
+		return ret;
+	}
+	constexpr i64 compute_block( u8 buf[4096], u64 len )
+	{
+		i64 ret = 0;
 
-		for ( current = shift = 0; current < size; current += 3, shift = (shift + 7) & 0x1F)
-			data += ((i64)((*(u32*)&buf[current]) & ((1 << (8 * ((size - current < 3 ? size - current : 3))))-1))) << shift;
+		for(u32 shl = 0; len > 0; shl+=7, shl&=0x1F)
+			ret += read_bytes(buf, len) << shl;
 
-		return data;
+		return ret;
 	}
 
-	i64 verify( u8* buf, u64 size )
+	constexpr i64 verify( u8* buf, u64 size )
 	{
 		i64 data = 0;
 
@@ -36,14 +53,14 @@ namespace prjx::checksum
 		return -1;
 	}
 
-	i64 verify( std::filesystem::path fname )
+	constexpr i64 verify( std::filesystem::path fname )
 	{
 		FILE *f        = NULL;
 		i64 data       =    0;
 		u64 len        =    0;
 		u8 buf[ 4096 ] = {  };
 
-		if(!fname.empty() &&
+			if(!fname.empty() &&
 		   std::filesystem::exists(fname) &&
 		   std::filesystem::file_size(fname) > 0 &&
 		   (f = fopen( fname.c_str(), "rb" )))
