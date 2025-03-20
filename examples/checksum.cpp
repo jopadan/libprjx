@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 
 i64 prjxsum(path src)
 {
-	src = canonical(src);
+	src = !src.is_absolute() ? proximate(src) : src;
 	if(exists(src))
 	{
 		if(!is_directory(src))
