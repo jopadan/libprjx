@@ -10,7 +10,7 @@ Forsaken ProjectX C++ library
 ## Example ##
 
 ```sh
-prjxsum data/levels/*/*.bsp
+prjxsum -r data/levels
 
 0033edcdbe539ba0 *data/levels/accworld/accworld.bsp
 63f04c40700994f6 *data/levels/alpha/alpha.bsp

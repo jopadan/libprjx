@@ -1,39 +1,89 @@
+#include <iostream>
+#include <getopt.h>
 #include <prjx/util/checksum.hpp>
 
+using namespace std::filesystem;
 using namespace prjx;
 using namespace prjx::math;
 
+static bool recursive = false;
+
+i64 prjxsum(path src);
+void print_usage(const char* program_file);
+void config_args(int argc, char** argv);
+
 int main(int argc, char** argv)
 {
-	if(argc <= 1)
+	config_args(argc, argv);
+
+	for(int i = optind; i < argc; i++)
+		prjxsum(argv[i]);
+
+	exit(EXIT_SUCCESS);
+}
+
+i64 prjxsum(path src)
+{
+	src = canonical(src);
+	if(exists(src))
 	{
-		printf("Usage: %s [FILE]...\nCalculate Forsaken ProjectX style checksums for FILEs (the current directory by default).\n", argv[0]);
+		if(!is_directory(src))
+		{
+			i64 sum = checksum::verify(src);
+			checksum::print(sum, src);
+			return sum;
+		}
+		else if(is_directory(src))
+		{
+			directory_iterator dir_iter(src);
+			while(dir_iter != end(dir_iter))
+			{
+				const directory_entry& dir_entry = *dir_iter++;
+				if(!is_directory(dir_entry) || recursive)
+					prjxsum(dir_entry.path());
+			}
+		}
+		else
+			std::cerr << "prjxsum: cannot access " << src << ": Not a file or directory" << std::endl;	
+	}
+	else
+		std::cerr << "prjxsum: cannot access " << src << ": No such file or directory" << std::endl;	
+	return -1;
+}
+
+void print_usage(const char* program_file)
+{
+	std::cerr << "Usage: " << program_file << " [-r] [FILE]..." << std::endl << "Calculate Forsaken ProjectX style checksums for FILEs [recursivly] (the current directory by default)." << std::endl;
+}
+
+void config_args(int argc, char** argv)
+{
+	if(argc < 2)
+	{
+		print_usage(argv[0]);
 		exit(EXIT_FAILURE);
 	}
-	for(int i = 1; i < argc && std::filesystem::exists(argv[i]); i++)
+
+	int opt;
+	int option_index;
+
+	static struct option long_options[] = {
+		{ "recursive", no_argument, 0, 'r' },
+		{ "file", required_argument, 0, 0 },
+		{ NULL, 0, NULL, 0 },
+	};
+
+	while((opt = getopt_long(argc, argv, "rc:", long_options, &option_index)) != -1)
 	{
-		i64 sum[2] = { -1, -1 };
-		/* print checksum of file */
-		sum[0] = checksum::verify(argv[i]);
-
-		u64 len  = std::filesystem::file_size(argv[i]);
-
-		if(len > 0)
+		switch(opt)
 		{
-			FILE* fp = fopen(argv[i], "rb");
-			u8* buf = (u8*)calloc(1, len);
-			u64 read = fread(buf, 1, len, fp);
-			fclose(fp);
-
-			/* print checksum of data in buf of len bytes */
-			if(len == read)
-				sum[1] = checksum::verify(buf, len);
-			free(buf);
-			buf = NULL;
-			if(sum[0] != sum[1])
-				fprintf(stderr, "[ERR] file and buffer checksums don't match!\n");
-			checksum::print(sum[0], argv[i]);
+			case 'r':
+				recursive = true;
+				break;
+			default:
+				print_usage(argv[0]);
+				exit(EXIT_FAILURE);
+				break;
 		}
 	}
-	exit(EXIT_SUCCESS);
 }
