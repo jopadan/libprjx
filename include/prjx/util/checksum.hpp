@@ -9,12 +9,12 @@ namespace prjx::checksum
 {
     using namespace prjx::math;
 
-    constexpr i64 compute_block( u8 buf[4096], u64 len, u32 shl = 7 )
+    constexpr i64 compute_block( u8 buf[4096], u64 len, u32 shl = 0)
     {
         i64 ret = 0;
 
         for(; len > 2; buf+=3, len-=3, shl+=7, shl&=0x1F)
-            ret += ((i64)le32toh(*(u32*)buf & 0x00FFFFFF)) << shl + 7;
+            ret += ((i64)le32toh(*(u32*)buf & 0x00FFFFFF)) << shl;
         if(len > 0)
             ret += ((i64)le16toh(*(u16*)buf & (len == 2 ? 0xFFFF : 0x00FF))) << shl;
         return ret;  
