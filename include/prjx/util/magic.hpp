@@ -9,6 +9,21 @@
 #define     BSP_PORTAL_VERSION_NUMBER 1
 #define      TELEPORTS_VERSION_NUMBER 2
 
+namespace prjx
+{
+	static const enum class version
+	{
+		NONE              = 000,
+		REMASTERED        = 200,
+		N64               = 110,
+		PSX               = 120,
+		PSP               = 130,
+		FULL_RETAIL_PATCH = 102,
+		GATEWAY           = 101,
+		FULL_RETAIL       = 100,
+	};
+	static const std::vector<const std::string> fingerprint = "Full Retail Patch Version (" MARKET_NAME ") 8 July 1998";
+}
 namespace prjx::file
 {
 	static const u32 magic = 0x584A5250; // MAGIC_NUMBER 
@@ -76,9 +91,20 @@ namespace prjx::file
 	{
 		static const version = 1; // MC_VERSION_NUMBER
 	};
+	/* Real-Time Lights (.RTL) file format */
 	struct rtl
 	{
 		static const version = 2; // RTL_VERSION_NUMBER
+		struct header
+		{
+			union magic
+			{
+				c8<4> string;
+				u32   number;
+			};
+			u32 version;
+			u16 rt_lights;
+		};
 	};
 };
 

@@ -4,11 +4,11 @@
 
 using namespace std::filesystem;
 using namespace prjx;
-using namespace prjx::math;
 
 static bool recursive = false;
+static bool ttystdout = true;
 
-i64 prjxsum(path src);
+int64_t prjxsum(path src);
 void print_usage(const char* program_file);
 void config_args(int argc, char** argv);
 
@@ -22,15 +22,16 @@ int main(int argc, char** argv)
 	exit(EXIT_SUCCESS);
 }
 
-i64 prjxsum(path src)
+int64_t prjxsum(path src)
 {
 	src = !src.is_absolute() ? proximate(src) : src;
 	if(exists(src))
 	{
 		if(!is_directory(src))
 		{
-			i64 sum = checksum::verify(src);
-			checksum::print(sum, src);
+			int64_t sum = checksum::verify(src);
+			if(ttystdout)
+				checksum::print(sum, src);
 			return sum;
 		}
 		else if(is_directory(src))
