@@ -37,3 +37,5 @@ using namespace prjx::file;
 - [ForsakenX](https://github.com/ForsakenX)
 - [ForsakenW](https://github.com/ForsakenW)
 - [Forsaken ProjectX Windows Direct3D Source](https://github.com/commercial-game-sources/forsaken)
+- [Forsaken OST FLAC](https://downloads.khinsider.com/game-soundtracks/album/forsaken-the-music)
+- [Forsaken 64 OST USF](https://www.zophar.net/music/nintendo-64-usf/forsaken-64)
