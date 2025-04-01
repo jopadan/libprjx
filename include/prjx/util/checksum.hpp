@@ -13,7 +13,7 @@ namespace prjx::checksum
     {
         i64 ret = 0;
 
-        for(; len > 2; buf+=3, len-=3, shl+=7, shl&=0x1F)
+        for(; len>=((1<<2)-1); buf+=(1<<2)-1, len-=(1<<2)-1, shl=(shl + ((1<<3)-1)) % (1<<5))
             ret += ((i64)le32toh(*(u32*)buf & 0x00FFFFFF)) << shl;
         if(len > 0)
             ret += ((i64)le16toh(*(u16*)buf & (len == 2 ? 0xFFFF : 0x00FF))) << shl;
