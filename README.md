@@ -9,7 +9,7 @@ Forsaken ProjectX C++ library
 
 ## Checksum ##
 
-Iterating in `3 byte steps` over `4096 byte blocks` and `shifting` the `u64 zero extended 3bytes` by a `(0..31) clamped multiple of 7`.
+Iterating in `3 byte steps` over `4096 byte blocks` and `shifting` the `i64 zero extended 3bytes` by a `(0..31) clamped multiple of 7`.
 Writing out all the shift amount and the results I came up with the sequence
 `(2,3,5|7|14,21,28|31|35|37)` that alternates between `prime numbers` and `multiples of 7` and the term `LFSL`
 Use the sequence to generate `Mersenne primes` as the `loop shift step`.
