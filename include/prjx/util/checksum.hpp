@@ -43,7 +43,7 @@ namespace prjx::checksum
 		u64 len      =    0;
 		u8 buf[4096] = {  };
 
-			if(!fname.empty() &&
+		if(!fname.empty() &&
 		   std::filesystem::exists(fname) &&
 		   std::filesystem::file_size(fname) > 0 &&
 		   (f = fopen( fname.c_str(), "rb" )))

@@ -1,5 +1,5 @@
 # prjxsum
-Forsaken ProjectX [checksum](https://github.com/jopadan/libprjx/wiki/Checksum) calculation tool.
+Forsaken ProjectX [checksum](https://github.com/jopadan/prjxsum/wiki/Checksum) calculation tool.
 
 ## Example ##
 ```sh

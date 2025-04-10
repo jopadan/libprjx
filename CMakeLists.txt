@@ -1,7 +1,7 @@
-cmake_minimum_required( VERSION 3.5 )
+cmake_minimum_required(VERSION 3.31.6)
 
-project( prjx VERSION 0.1 LANGUAGES C CXX )
-set(PROJECT_DESCRIPTION "Forsaken ProjectX C++ library")
+project( prjxsum VERSION 0.1 LANGUAGES C CXX )
+set(PROJECT_DESCRIPTION "Forsaken ProjectX C++ checksum tool")
 
 include(GNUInstallDirs)
 
@@ -14,6 +14,7 @@ set( CMAKE_C_STANDARD 23 )
 set( CMAKE_C_STANDARD_REQUIRED ON )
 set( CMAKE_CXX_STANDARD 26 )
 set( CMAKE_CXX_STANDARD_REQUIRED ON )
+set( CMAKE_CXX_EXTENSIONS ON )
 
 if( NOT CMAKE_BUILD_TYPE STREQUAL Debug )
 add_compile_options(-O3)
@@ -36,23 +37,15 @@ add_link_options(-Wl,--gc-sections)
 add_link_options(-Wl,--print-gc-sections)
 add_link_options(-Wl,-s)
 
-find_package(OpenGL REQUIRED)
 
 add_library( prjx INTERFACE )
-
 target_include_directories( prjx INTERFACE
         PUBLIC_HEADER $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
-target_link_libraries( prjx INTERFACE m OpenGL::OpenGL OpenGL::GLU glfw GLC )
+target_link_libraries( prjx INTERFACE m )
 
-add_executable( prjxsum tools/prjxsum.cpp )
-target_link_libraries( prjxsum PUBLIC prjx )
-
-add_executable( vector examples/vector.cpp )
-target_link_libraries( vector PUBLIC prjx )
+add_executable( ${PROJECT_NAME} tools/prjxsum.cpp )
+target_link_libraries( ${PROJECT_NAME} PUBLIC prjx )
 
 install(TARGETS prjxsum DESTINATION ${CMAKE_INSTALL_BINDIR} COMPONENT EXECUTABLES)
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/include/ DESTINATION
-        ${CMAKE_INSTALL_INCLUDEDIR} COMPONENT headers
-)
