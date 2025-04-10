@@ -4,7 +4,7 @@ Forsaken ProjectX C++ library
 ## Goals ##
 - support platform independent frameworks
 - support forsaken file formats
-- support checksum algorithm https://github.com/jopadan/libprjx/wiki/Checksum
+- support [checksum](https://github.com/jopadan/libprjx/wiki/Checksum) algorithm 
 - support aligned linalg simd types
 
 ## Example ##
