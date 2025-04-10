@@ -1,14 +1,7 @@
-# libprjx
-Forsaken ProjectX C++ library 
-
-## Goals ##
-- support platform independent frameworks
-- support forsaken file formats
-- support [checksum](https://github.com/jopadan/libprjx/wiki/Checksum) algorithm 
-- support aligned linalg simd types
+# prjxsum
+Forsaken ProjectX [checksum](https://github.com/jopadan/libprjx/wiki/Checksum) calculation tool.
 
 ## Example ##
-
 ```sh
 prjxsum -r data/levels
 
@@ -22,16 +15,6 @@ prjxsum -r data/levels
 b0dccc483a3accd6 *data/levels/azt-sp01/azt-sp01.bsp
 7fbb19a1d8dabd3d *data/levels/aztec/aztec.bsp
 ```
-## Usage ##
-
-```cpp
-
-using namespace prjx::math;
-using namespace prjx::checksum;
-using namespace prjx::file;
-
-```
-
 ## Links ##
 - [Forsaken: Remastered](https://www.mobygames.com/game/111883/forsaken-remastered/)
 - [ForsakenX](https://github.com/ForsakenX)
