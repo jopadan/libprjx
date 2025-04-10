@@ -9,7 +9,7 @@ namespace prjx::checksum
 {
 	using namespace prjx::math;
 
-	constexpr i64 compute_block( u8 buf[4096], u64 len, u32 shl = 0)
+	constexpr i64 compute_block(u8 buf[4096], u64 len, u32 shl = 0)
 	{
 		i64 ret = 0;
 
@@ -20,7 +20,7 @@ namespace prjx::checksum
 		return ret;  
 	}
  
-	constexpr i64 verify( u8* buf, u64 size )
+	constexpr i64 verify(u8* buf, u64 size)
 	{
 		i64 data = 0;
 
@@ -36,7 +36,7 @@ namespace prjx::checksum
 		return -1;
 	}
 
-	constexpr i64 verify( std::filesystem::path fname )
+	constexpr i64 verify(std::filesystem::path fname)
 	{
 		FILE *f      = NULL;
 		i64 data     =    0;
@@ -50,7 +50,7 @@ namespace prjx::checksum
 		{
 			while( !feof(f) && !ferror(f) )
 			{
-				len = fread( (void *) buf, 1, sizeof( buf ), f );
+				len = fread((void *) buf, 1, sizeof( buf ), f );
 				data += compute_block(buf, len);
 			}
 			fclose( f );

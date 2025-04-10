@@ -9,7 +9,7 @@ Writing out all the shift amount and the results I came up with the sequence
 Use the sequence to generate `Mersenne primes` as the `loop shift step`.
 
 ```cpp
-constexpr i64 compute_block( u8 buf[4096], u64 len, u32 shl = 0)
+constexpr i64 compute_block(u8 buf[4096], u64 len, u32 shl = 0)
 {
 	i64 ret = 0;
 
