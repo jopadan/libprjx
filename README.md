@@ -4,28 +4,8 @@ Forsaken ProjectX C++ library
 ## Goals ##
 - support platform independent frameworks
 - support forsaken file formats
-- support checksum algorithm
+- support checksum algorithm https://github.com/jopadan/libprjx/wiki/Checksum
 - support aligned linalg simd types
-
-## Checksum ##
-
-Iterating in `3 byte steps` over `4096 byte blocks` and `shifting` the `i64 zero extended 3bytes` by a `(0..31) clamped multiple of 7`.
-Writing out all the shift amount and the results I came up with the sequence
-`(2,3,5|7|14,21,28|31|35|37)` that alternates between `prime numbers` and `multiples of 7` and the term `LFSL`
-Use the sequence to generate `Mersenne primes` as the `loop shift step`.
-
-```cpp
-    constexpr i64 compute_block( u8 buf[4096], u64 len, u32 shl = 0)
-    {
-        i64 ret = 0;
-
-        for(; len>=((1<<2)-1); buf+=(1<<2)-1, len-=(1<<2)-1, shl=(shl + ((1<<3)-1)) % (1<<5))
-            ret += ((i64)le32toh(*(u32*)buf & 0x00FFFFFF)) << shl;
-        if(len > 0)
-            ret += ((i64)le16toh(*(u16*)buf & (len == 2 ? 0xFFFF : 0x00FF))) << shl;
-        return ret;  
-    }
-```
 
 ## Example ##
 
