@@ -9,7 +9,7 @@ namespace prjx::checksum
 {
 	using namespace prjx::math;
 
-	constexpr i64 compute_block(u8 buf[4096], u64 len, u32 shl = 0)
+	static constexpr i64 compute_block(u8 buf[4096], u64 len, u32 shl = 0)
 	{
 		i64 ret = 0;
 
@@ -20,7 +20,7 @@ namespace prjx::checksum
 		return ret;  
 	}
  
-	constexpr i64 verify(u8* buf, u64 size)
+	static constexpr i64 verify(u8* buf, u64 size)
 	{
 		i64 data = 0;
 
@@ -36,7 +36,7 @@ namespace prjx::checksum
 		return -1;
 	}
 
-	constexpr i64 verify(std::filesystem::path fname)
+	static constexpr i64 verify(const std::filesystem::path fname)
 	{
 		FILE *f      = NULL;
 		i64 data     =    0;
@@ -59,7 +59,7 @@ namespace prjx::checksum
 		return -1;
 	}
 
-	void print(i64 sum, std::filesystem::path filename, bool binary = true, FILE* stream = stdout)
+	static constexpr void print(i64 sum, const std::filesystem::path filename, bool binary = true, FILE* stream = stdout)
 	{
 		fprintf(stream, "%016lx %c%s\n", sum, binary ? '*' : ' ', filename.c_str());
 	}
